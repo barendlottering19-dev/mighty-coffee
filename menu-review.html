@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu Image Review</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #1a1a1a; color: #fff; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #C67C4E; margin-bottom: 30px; }
+  .grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .card { background: #2C1810; border-radius: 12px; overflow: hidden; }
+  .card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+  .card-body { padding: 16px; }
+  .card-body h3 { margin: 0 0 4px; color: #FFF8F0; }
+  .card-body .cat { color: #C67C4E; font-size: 0.85em; margin-bottom: 8px; display: block; }
+  .card-body p { color: #ccc; font-size: 0.9em; line-height: 1.5; margin: 0; }
+  .card-body .id { color: #666; font-size: 0.75em; margin-top: 8px; display: block; }
+  .mismatch { border: 3px solid #e74c3c; }
+  .ok { border: 3px solid #27ae60; }
+</style>
+</head>
+<body>
+<h1>☕ Mighty Coffee — Menu Image Review</h1>
+<p style="text-align:center;color:#aaa;margin-bottom:30px">Review each image. Does the name + description match what you see?</p>
+<div class="grid" id="grid"></div>
+<script>
+const items = [
+  { id: "1", name: "Espresso Mighty", cat: "coffee", desc: "Double shot espresso with a velvety crema, locally roasted African beans", price: "R28", img: "https://img05.restaurantguru.com/rdb7-Mighty-Coffee-beverage-2025-07.jpg" },
+  { id: "2", name: "Caramel Latte", cat: "coffee", desc: "Smooth latte with house-made caramel drizzle and a touch of sea salt", price: "R35", img: "https://img05.restaurantguru.com/ra04-beverage-Mighty-Coffee-2025-07.jpg" },
+  { id: "3", name: "Cappuccino", cat: "coffee", desc: "Classic Italian cappuccino with a perfect foam-to-espresso ratio", price: "R30", img: "https://img05.restaurantguru.com/r6a0-Mighty-Coffee-dishes-2025-07.jpg" },
+  { id: "4", name: "House Blend Coffee", cat: "coffee", desc: "Our signature slow-drip coffee blend, smooth and full-bodied", price: "R22", img: "https://img05.restaurantguru.com/re9e-Mighty-Coffee-food-2025-07.jpg" },
+  { id: "5", name: "Iced Coffee", cat: "cold-drinks", desc: "Chilled house-brewed coffee served over ice", price: "R26", img: "https://img05.restaurantguru.com/rca2-dishes-Mighty-Coffee-2025-07.jpg" },
+  { id: "6", name: "Grilled Burger", cat: "cold-drinks", desc: "Juicy beef burger with cheddar, lettuce, tomato and hand-cut fries", price: "R38", img: "https://img05.restaurantguru.com/rd51-Mighty-Coffee-burger-2025-07.jpg" },
+  { id: "7", name: "Milkshake", cat: "cold-drinks", desc: "Thick and creamy milkshake in vanilla, chocolate or strawberry", price: "R32", img: "https://img05.restaurantguru.com/r598-Mighty-Coffee-dishes-2025-07-2.jpg" },
+  { id: "8", name: "Fresh Juice", cat: "cold-drinks", desc: "Freshly squeezed orange or seasonal fruit juice", price: "R28", img: "https://img05.restaurantguru.com/r097-Mighty-Coffee-meals-2025-07.jpg" },
+  { id: "9", name: "Smoothie", cat: "cold-drinks", desc: "Blended seasonal fruits with yogurt and honey", price: "R35", img: "https://img05.restaurantguru.com/r06d-meals-Mighty-Coffee-2025-07-2.jpg" },
+  { id: "10", name: "Full Breakfast", cat: "breakfast", desc: "Eggs, bacon, sausage, grilled tomato, toast, and baked beans", price: "R75", img: "https://img05.restaurantguru.com/rc37-meals-Mighty-Coffee-2025-07.jpg" },
+  { id: "11", name: "Breakfast Burger", cat: "breakfast", desc: "Beef patty with egg, cheese and bacon on a toasted bun", price: "R45", img: "https://img05.restaurantguru.com/r24e-Mighty-Coffee-burger-2025-07-1.jpg" },
+  { id: "12", name: "Eggs Benedict", cat: "breakfast", desc: "Poached eggs on toasted muffin with hollandaise sauce", price: "R55", img: "https://img05.restaurantguru.com/rd1e-food-Mighty-Coffee-2022-09.jpg" },
+  { id: "13", name: "Chicken Burger", cat: "breakfast", desc: "Grilled chicken fillet burger with fresh salad and aioli", price: "R42", img: "https://img05.restaurantguru.com/rb1d-Mighty-Coffee-dishes-2025-07-1.jpg" },
+  { id: "14", name: "Chocolate Mousse", cat: "desserts", desc: "Rich and creamy Belgian chocolate mousse", price: "R35", img: "https://img05.restaurantguru.com/r5f5-Mighty-Coffee-chocolate-mousse.jpg" },
+  { id: "15", name: "Cheese Platter", cat: "desserts", desc: "Selection of fine cheeses with crackers and chutney", price: "R48", img: "https://img05.restaurantguru.com/rf37-cheese-plate-Mighty-Coffee-2025-07.jpg" },
+  { id: "16", name: "French Fries", cat: "desserts", desc: "Crispy golden hand-cut fries with dipping sauce", price: "R22", img: "https://img05.restaurantguru.com/rdd6-Mighty-Coffee-french-fries-2025-07.jpg" }
+];
+const grid = document.getElementById('grid');
+items.forEach(item => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.parentElement.classList.add('mismatch');this.alt='⚠ IMAGE LOAD FAILED'">
+    <div class="card-body">
+      <span class="id">#${item.id} · ${item.cat} · ${item.price}</span>
+      <h3>${item.name}</h3>
+      <span class="cat">${item.cat}</span>
+      <p>${item.desc}</p>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>
