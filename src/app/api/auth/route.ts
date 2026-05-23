@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createHash } from "crypto";
 import { loginSchema, checkRateLimit } from "@/lib/security";
 import { createAdminClient } from "@/lib/supabase/server";
 
-function hashPassword(password: string): string {
-  return createHash("sha256").update(password + (process.env.ADMIN_SECRET || "secret")).digest("hex");
+export const runtime = "edge";
+
+async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password + (process.env.ADMIN_SECRET || "secret"));
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hashBuffer)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 export async function POST(request: Request) {
@@ -32,7 +36,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
 
-    const hashed = hashPassword(result.data.password);
+    const hashed = await hashPassword(result.data.password);
     if (hashed !== user.password_hash) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
