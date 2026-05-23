@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { newsletterSchema, sanitizeHtml, checkRateLimit } from "@/lib/security";
 import { createAdminClient } from "@/lib/supabase/server";
 
-export const runtime = "edge";
-
 export async function POST(request: Request) {
   try {
     const ip = request.headers.get("x-forwarded-for") || "unknown";
