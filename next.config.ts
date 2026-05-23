@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "*.supabase.co",
+        hostname: "images.pexels.com",
       },
       {
         protocol: "https",
@@ -17,11 +17,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "img02.restaurantguru.com",
-      },
-      {
-        protocol: "https",
-        hostname: "img3.restaurantguru.com",
+        hostname: "*.supabase.co",
       },
     ],
     formats: ["image/avif", "image/webp"],
