@@ -1,11 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mighty-coffee",
+  "pages_build_output_dir": ".open-next",
   "compatibility_date": "2026-05-23",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  },
-  "main": ".open-next/worker.js"
+  "compatibility_flags": ["nodejs_compat"]
 }

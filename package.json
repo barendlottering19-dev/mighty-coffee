@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "cf:build": "npx opennextjs-cloudflare build",
-    "cf:deploy": "npx wrangler deploy",
-    "cf:preview": "npx wrangler dev"
+    "cf:build": "npx opennextjs-cloudflare build && node -e \"require('fs').copyFileSync('.open-next/worker.js', '.open-next/_worker.js')\"",
+    "cf:deploy": "npx wrangler pages deploy .open-next --project-name=mighty-coffee --branch=master",
+    "cf:preview": "npx wrangler pages dev .open-next"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
